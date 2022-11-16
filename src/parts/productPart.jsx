@@ -1,12 +1,13 @@
-import React from 'react';
+import { useContext } from 'react';
+import { ProjContext } from '../contexter';
 
 import { useParams, Link } from 'react-router-dom';
 import Rating from '../components/rating';
-import data from '../data';
 
 export default function ProductPart(props) {
+  const { products } = useContext(ProjContext);
   const params = useParams();
-  const product = data.products.find((x) => x._id === params.id);
+  const product = products.find((x) => x._id === params.id);
 
   if (!product) {
     return <div> Product Not Found</div>;
@@ -54,7 +55,7 @@ export default function ProductPart(props) {
                     {product.countInStock > 0 ? (
                       <span className="success">In Stock</span>
                     ) : (
-                      <span className="error">Unavailable</span>
+                      <span className="danger">Unavailable</span>
                     )}
                   </div>
                 </div>
