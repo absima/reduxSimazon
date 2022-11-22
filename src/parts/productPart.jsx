@@ -1,11 +1,11 @@
-import { useContext } from 'react';
-import { ProjContext } from '../contexter';
+// import { useContext } from 'react';
+// import { ProjContext } from '../contexter';
 
 import { useParams, Link } from 'react-router-dom';
 import Rating from '../components/rating';
 
 export default function ProductPart(props) {
-  const { products } = useContext(ProjContext);
+  // const { products } = useContext(ProjContext);
   const params = useParams();
   const product = products.find((x) => x._id === params.id);
 
