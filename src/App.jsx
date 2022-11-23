@@ -1,31 +1,45 @@
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Link, Routes, Route } from 'react-router-dom';
 import HomePart from './parts/homePart';
 import ProductPart from './parts/productPart';
-
+import CartPart from './parts/cartPart';
 // import './App.css';
+import { useSelector } from 'react-redux';
+
+import { cartdata } from './redux/productSlice';
 
 function App() {
+  const cartItems = useSelector(cartdata);
+  console.log('within app', cartItems)
+
   return (
     <div className="grid-container">
       <header className="row">
         <div>
-          <a className="brand" href="/">
+          <Link className="brand" to="/">
             simazon
-          </a>
+          </Link>
         </div>
         <div>
-          <a href="/cart">Cart</a>
-          <a href="/signin">Sign In</a>
+          <Link to="/cart">
+            Cart
+            {cartItems.length > 0 && (
+              <span className="badge">{cartItems.length}</span>
+            )}
+          </Link>
+          <Link to="/signin">Sign In</Link>
         </div>
       </header>
       <main>
         <Routes>
           <Route path="/" element={<HomePart />} />
           <Route path="/product/:id" element={<ProductPart />} />
+          <Route path="/cart/:id" element={<CartPart />} />
         </Routes>
       </main>
-      <footer className="row center">All right reserved</footer>
+      <footer className="row center">
+        {/* All right reserved */}
+        </footer>
     </div>
   );
 }
