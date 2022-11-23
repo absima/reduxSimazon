@@ -19,17 +19,29 @@ export const productSlice = createSlice({
     getSelected: (state, action) => {
       state.sdata = action.payload;
     },
-    // for cart item
-    adding2cart: (state, action) => {
+    // for adding cart item
+    add2cart: (state, action) => {
       const newItem = action.payload;
-      const exists = state.cdata.find( item => {
-        if (item._id ===newItem._id) { return true}
-        return false 
-      })
-      exists !== undefined ? 
-      state.cdata = [...state.cdata] :
-      state.cdata = [...state.cdata, action.payload];
+      const exists = state.cdata.find((item) => {
+        if (item._id === newItem._id) {
+          return true;
+        }
+        return false;
+      });
+      exists !== undefined
+        ? (state.cdata = [...state.cdata])
+        : (state.cdata = [...state.cdata, action.payload]);
     },
+
+    // for removing cart item
+    removeFromCart: (state, action) => {
+      const todelete = action.payload;
+      const index = state.cdata.findIndex((item) => {
+        return item._id === todelete._id;
+      });
+      state.cdata.splice(index, 1);
+    },
+
     // for loading true or false
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -73,32 +85,23 @@ export const getSelectedProdAsync = (productId) => async (dispatch) => {
 // <<<---------
 
 // --------->>> for cart item
-export const addToCart = (productId, qty) => async (dispatch
-  // , getState
-  ) => {
-  const response = await axios.get(
-    `http://localhost:5000/products/${productId}`
-  );
-  const data = response.data;
-  console.log('within cart--------', qty);
-
-  // const dta = {
-  //   type: CART_ADD_ITEM,
-  //   payload: {
-  //     name: data.name,
-  //     image: data.image,
-  //     price: data.price,
-  //     countInStock: data.countInStock,
-  //     product: data._id,
-  //     qty: qty,
-  //   },
-  // };
-  dispatch(adding2cart(data));
-  // localStorage.setItem('cartItems', JSON.stringify(getState().cart.cartItems));
-};
+export const add2orRemoveFromCart =
+  (productId, qty, flag) => async (dispatch) => {
+    const response = await axios.get(
+      `http://localhost:5000/products/${productId}`
+    );
+    const data = response.data;
+    data.num = qty
+    console.log('within cart--------', qty);
+    if (flag === 'add') {
+      dispatch(add2cart(data));
+    } else if (flag === 'remove') {
+      dispatch(removeFromCart(data));
+    }
+  };
 // <<<---------
 
-export const { getProducts, getSelected, adding2cart, setLoading, catchError } =
+export const { getProducts, getSelected, add2cart, removeFromCart, setLoading, catchError } =
   productSlice.actions;
 export const products = (state) => state.products.data;
 export const selected = (state) => state.products.sdata;

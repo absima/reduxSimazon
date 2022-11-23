@@ -10,7 +10,7 @@ import { cartdata } from './redux/productSlice';
 
 function App() {
   const cartItems = useSelector(cartdata);
-  console.log('within app', cartItems)
+  // console.log('within app', cartItems)
 
   return (
     <div className="grid-container">
