@@ -35,6 +35,7 @@ function App() {
           <Route path="/" element={<HomePart />} />
           <Route path="/product/:id" element={<ProductPart />} />
           <Route path="/cart/:id" element={<CartPart />} />
+          <Route path="/cart" element={<CartPart />} />
         </Routes>
       </main>
       <footer className="row center">

@@ -9,7 +9,7 @@ export default function CartPart(props) {
   const itemID = params.id;
   const { search } = useLocation();
   const qtyInUrl = new URLSearchParams(search).get('qty');
-  const qty = qtyInUrl ? Number(qtyInUrl) : 1;
+  const quant = qtyInUrl ? Number(qtyInUrl) : 1;
 
   const dispatch = useDispatch();
   const incart = useSelector(cartdata);
@@ -21,7 +21,7 @@ export default function CartPart(props) {
 
   // const onload = useSelector(loading);
   // const err = useSelector(error);
-
+const [qty, setQty] = useState(quant)
 const [flag, setFlag] = useState('add')
 
   // const removeFromCartHandler = (id) => {
@@ -65,7 +65,7 @@ const [flag, setFlag] = useState('add')
                   </div>
                   <div>
                     <select
-                      value={item.qty}
+                      value={item.num}
                       onChange={(e) =>
                         dispatch(add2orRemoveFromCart(item._id, Number(e.target.value), 'add'))
                       }
@@ -97,8 +97,8 @@ const [flag, setFlag] = useState('add')
           <ul>
             <li>
               <h2>
-                Subtotal ({cartItems.reduce((a, c) => a + c.qty, 0)} items) : $
-                {cartItems.reduce((a, c) => a + c.price * c.qty, 0)}
+                Subtotal ({cartItems.reduce((a, c) => a + c.num, 0)} items) : $
+                {cartItems.reduce((a, c) => a + c.price * c.num, 0)}
               </h2>
             </li>
             <li>

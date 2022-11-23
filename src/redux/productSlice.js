@@ -6,7 +6,8 @@ export const productSlice = createSlice({
   initialState: {
     data: [],
     sdata: {},
-    cdata: [],
+    // cdata: [],
+    cdata: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
     loading: true,
     error: '',
   },
@@ -86,23 +87,34 @@ export const getSelectedProdAsync = (productId) => async (dispatch) => {
 
 // --------->>> for cart item
 export const add2orRemoveFromCart =
-  (productId, qty, flag) => async (dispatch) => {
+  (productId, qty, flag) => async (dispatch, getState) => {
     const response = await axios.get(
       `http://localhost:5000/products/${productId}`
     );
     const data = response.data;
-    data.num = qty
+    data.num = qty;
     console.log('within cart--------', qty);
     if (flag === 'add') {
       dispatch(add2cart(data));
     } else if (flag === 'remove') {
       dispatch(removeFromCart(data));
     }
+    console.log('getState', getState());
+    localStorage.setItem(
+      'cartItems',
+      JSON.stringify(getState().products.cdata)
+    );
   };
 // <<<---------
 
-export const { getProducts, getSelected, add2cart, removeFromCart, setLoading, catchError } =
-  productSlice.actions;
+export const {
+  getProducts,
+  getSelected,
+  add2cart,
+  removeFromCart,
+  setLoading,
+  catchError,
+} = productSlice.actions;
 export const products = (state) => state.products.data;
 export const selected = (state) => state.products.sdata;
 export const cartdata = (state) => state.products.cdata;
