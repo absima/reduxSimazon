@@ -69,7 +69,8 @@ export const getProductsAsync = () => async (dispatch) => {
     dispatch(setLoading(true));
     const response = await axios.get(
       // `http://localhost:5000/products`
-      `http://localhost:5050/product`
+      // `http://localhost:5050/product`
+      `${import.meta.env.VITE_PROJECT_API}/product`
     );
     // console.log(response);
     dispatch(setLoading(false));
@@ -86,7 +87,8 @@ export const getSelectedProdAsync = (productId) => async (dispatch) => {
     // dispatch(setLoading(true));
     const response = await axios.get(
       // `http://localhost:5000/products/${productId}`
-      `http://localhost:5050/product/${productId}`
+      // `http://localhost:5050/product/${productId}`
+      `${import.meta.env.VITE_PROJECT_API}/product/${productId}`
     );
     dispatch(setLoading(false));
     dispatch(getSelected(response.data));
@@ -122,7 +124,10 @@ export const add2orRemoveFromCart =
 
 export const signinAsync = (email, password) => async (dispatch) => {
   try {
-    const { data } = await axios.post('http://localhost:5050/login', {
+    const { data } = await axios.post(
+      // 'http://localhost:5050/login',
+      `${import.meta.env.VITE_PROJECT_API}/login`,
+       {
       email,
       password,
     });
