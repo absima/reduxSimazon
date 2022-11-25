@@ -7,7 +7,12 @@ export const productSlice = createSlice({
     data: [],
     sdata: {},
     // cdata: [],
-    cdata: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : [],
+    cdata: localStorage.getItem('cartItems')
+      ? JSON.parse(localStorage.getItem('cartItems'))
+      : [],
+    logindata: localStorage.getItem('userInfo')
+      ? JSON.parse(localStorage.getItem('userInfo'))
+      : null,
     loading: true,
     error: '',
   },
@@ -42,7 +47,10 @@ export const productSlice = createSlice({
       });
       state.cdata.splice(index, 1);
     },
-
+    // logging in
+    loggingIn: (state, action) => {
+      state.logInData = action.payload; //
+    },
     // for loading true or false
     setLoading: (state, action) => {
       state.loading = action.payload;
@@ -59,7 +67,10 @@ export const productSlice = createSlice({
 export const getProductsAsync = () => async (dispatch) => {
   try {
     dispatch(setLoading(true));
-    const response = await axios.get(`http://localhost:5000/products`);
+    const response = await axios.get(
+      // `http://localhost:5000/products`
+      `http://localhost:5050/product`
+    );
     // console.log(response);
     dispatch(setLoading(false));
     dispatch(getProducts(response.data));
@@ -74,7 +85,8 @@ export const getSelectedProdAsync = (productId) => async (dispatch) => {
   try {
     // dispatch(setLoading(true));
     const response = await axios.get(
-      `http://localhost:5000/products/${productId}`
+      // `http://localhost:5000/products/${productId}`
+      `http://localhost:5050/product/${productId}`
     );
     dispatch(setLoading(false));
     dispatch(getSelected(response.data));
@@ -89,7 +101,8 @@ export const getSelectedProdAsync = (productId) => async (dispatch) => {
 export const add2orRemoveFromCart =
   (productId, qty, flag) => async (dispatch, getState) => {
     const response = await axios.get(
-      `http://localhost:5000/products/${productId}`
+      // `http://localhost:5000/products/${productId}`
+      `http://localhost:5050/product/${productId}`
     );
     const data = response.data;
     data.num = qty;
@@ -107,17 +120,39 @@ export const add2orRemoveFromCart =
   };
 // <<<---------
 
+export const signinAsync = (email, password) => async (dispatch) => {
+  try {
+    const { data } = await axios.post('http://localhost:5050/login', {
+      email,
+      password,
+    });
+    console.log('within Redux', data)
+    dispatch(loggingIn(data));
+    localStorage.setItem('userInfo', JSON.stringify(data));
+  } catch (error) {
+    return error.message;
+  }
+};
+
+// export const signOut = () => (dispatch) => {
+//   localStorage.removeItem('userInfo');
+//   localStorage.removeItem('cartItems');
+//   // dispatch({ type: USER_SIGNOUT });
+// };
+
 export const {
   getProducts,
   getSelected,
   add2cart,
   removeFromCart,
+  loggingIn,
   setLoading,
   catchError,
 } = productSlice.actions;
 export const products = (state) => state.products.data;
 export const selected = (state) => state.products.sdata;
 export const cartdata = (state) => state.products.cdata;
+export const loggingdata = (state) => state.products.logindata;
 export const loading = (state) => state.products.loading;
 export const error = (state) => state.products.error;
 

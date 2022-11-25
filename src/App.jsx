@@ -3,14 +3,34 @@ import { Link, Routes, Route } from 'react-router-dom';
 import HomePart from './parts/homePart';
 import ProductPart from './parts/productPart';
 import CartPart from './parts/cartPart';
+import SignInPart from './parts/signInPart';
 // import './App.css';
-import { useSelector } from 'react-redux';
-
-import { cartdata } from './redux/productSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { cartdata, loggingdata } from './redux/productSlice';
 
 function App() {
+  console.log(`${import.meta.env.VITE_PROJECT_API}/product`)
+
   const cartItems = useSelector(cartdata);
   // console.log('within app', cartItems)
+
+  const userInfo = useSelector(loggingdata);
+
+  console.log(userInfo)
+
+  const dispatch = useDispatch();
+
+
+
+  const signout = () => {
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('cartItems');
+    // dispatch({ type: USER_SIGNOUT });
+  };
+
+  const signoutHandler = () => {
+    dispatch(signout());
+  };
 
   return (
     <div className="grid-container">
@@ -27,20 +47,35 @@ function App() {
               <span className="badge">{cartItems.length}</span>
             )}
           </Link>
-          <Link to="/signin">Sign In</Link>
+
+          {userInfo ? (
+            <div className="dropdown">
+              <Link to="#">
+                {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+              </Link>
+              <ul className="dropdown-content">
+                <li>
+                  <Link to="#signout" onClick={signoutHandler}>
+                    Sign Out
+                  </Link>
+                </li>
+              </ul>
+            </div>
+          ) : (
+            <Link to="/signin">Sign In</Link>
+          )}
         </div>
       </header>
       <main>
         <Routes>
           <Route path="/" element={<HomePart />} />
           <Route path="/product/:id" element={<ProductPart />} />
+          <Route path="/signin" element={<SignInPart />} />
           <Route path="/cart/:id" element={<CartPart />} />
           <Route path="/cart" element={<CartPart />} />
         </Routes>
       </main>
-      <footer className="row center">
-        {/* All right reserved */}
-        </footer>
+      <footer className="row center">{/* All right reserved */}</footer>
     </div>
   );
 }

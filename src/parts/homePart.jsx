@@ -21,7 +21,8 @@ export default function HomePart() {
   const onload = useSelector(loading);
   const err = useSelector(error);
   const dispatch = useDispatch();
-
+  console.log(productList)
+  
   useEffect(() => {
     dispatch(getProductsAsync());
   }, []);
