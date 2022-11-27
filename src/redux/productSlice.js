@@ -1,164 +1,203 @@
 import { createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+// import everything from product api
+import * as productApi from '../api/productApi';
 
-export const productSlice = createSlice({
+// create slice
+const productSlice = createSlice({
   name: 'products',
   initialState: {
-    data: [],
-    sdata: {},
-    // cdata: [],
-    cdata: localStorage.getItem('cartItems')
+    // products
+    products: [],
+    // product
+    product: {},
+    // loading
+    loading: false,
+    //
+    error: null,
+    // cart
+    cart: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
       : [],
-    logindata: localStorage.getItem('userInfo')
-      ? JSON.parse(localStorage.getItem('userInfo'))
-      : null,
-    loading: true,
-    error: '',
   },
   reducers: {
-    // for all items
-    getProducts: (state, action) => {
-      state.data = action.payload;
+    // create reducers
+    // get all products
+    getAllProductsRequest: (state) => {
+      state.loading = true;
     },
-    // for selected item
-    getSelected: (state, action) => {
-      state.sdata = action.payload;
+    getAllProductsSuccess: (state, action) => {
+      state.loading = false;
+      state.products = action.payload;
     },
-    // for adding cart item
-    add2cart: (state, action) => {
+    getAllProductsFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // get one product
+    getOneProductRequest: (state) => {
+      state.loading = true;
+    },
+    getOneProductSuccess: (state, action) => {
+      state.loading = false;
+      state.product = action.payload;
+    },
+    getOneProductFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // add one product to cart
+    addToCartRequest: (state) => {
+      state.loading = true;
+    },
+    addToCartSuccess: (state, action) => {
+      state.loading = false;
       const newItem = action.payload;
-      const exists = state.cdata.find((item) => {
+      const exists = state.cart.find((item) => {
         if (item._id === newItem._id) {
           return true;
         }
         return false;
       });
       exists !== undefined
-        ? (state.cdata = [...state.cdata])
-        : (state.cdata = [...state.cdata, action.payload]);
+        ? (state.cart = [...state.cart])
+        : (state.cart = [...state.cart, newItem]);
     },
-
-    // for removing cart item
-    removeFromCart: (state, action) => {
+    addToCartFail: (state, action) => {
+      state.loading = false;
+      state.error = action.payload;
+    },
+    // delete one product from cart
+    deleteFromCartRequest: (state) => {
+      state.loading = true;
+    },
+    deleteFromCartSuccess: (state, action) => {
+      state.loading = false;
       const todelete = action.payload;
-      const index = state.cdata.findIndex((item) => {
+      const index = state.cart.findIndex((item) => {
         return item._id === todelete._id;
       });
-      state.cdata.splice(index, 1);
+      state.cart.splice(index, 1);
     },
-    // logging in
-    loggingIn: (state, action) => {
-      state.logInData = action.payload; //
-    },
-    // for loading true or false
-    setLoading: (state, action) => {
-      state.loading = action.payload;
-    },
-    // for error in loading
-    catchError: (state, action) => {
+    deleteFromCartFail: (state, action) => {
+      state.loading = false;
       state.error = action.payload;
     },
   },
 });
 
-// "ACTION"
-// this async action triggers another action getProducts
-export const getProductsAsync = () => async (dispatch) => {
-  try {
-    dispatch(setLoading(true));
-    const response = await axios.get(
-      // `http://localhost:5000/products`
-      // `http://localhost:5050/product`
-      `${import.meta.env.VITE_PROJECT_API}/product`
-    );
-    // console.log(response);
-    dispatch(setLoading(false));
-    dispatch(getProducts(response.data));
-  } catch (err) {
-    dispatch(catchError(err));
-    // throw new Error(err);
-  }
-};
 
-// --------->>> for selected item
-export const getSelectedProdAsync = (productId) => async (dispatch) => {
-  try {
-    // dispatch(setLoading(true));
-    const response = await axios.get(
-      // `http://localhost:5000/products/${productId}`
-      // `http://localhost:5050/product/${productId}`
-      `${import.meta.env.VITE_PROJECT_API}/product/${productId}`
-    );
-    dispatch(setLoading(false));
-    dispatch(getSelected(response.data));
-  } catch (err) {
-    dispatch(catchError(err));
-    // throw new Error(err);
-  }
-};
-// <<<---------
 
-// --------->>> for cart item
-export const add2orRemoveFromCart =
-  (productId, qty, flag) => async (dispatch, getState) => {
-    const response = await axios.get(
-      // `http://localhost:5000/products/${productId}`
-      `http://localhost:5050/product/${productId}`
-    );
-    const data = response.data;
-    data.num = qty;
-    console.log('within cart--------', qty);
-    if (flag === 'add') {
-      dispatch(add2cart(data));
-    } else if (flag === 'remove') {
-      dispatch(removeFromCart(data));
-    }
-    console.log('getState', getState());
-    localStorage.setItem(
-      'cartItems',
-      JSON.stringify(getState().products.cdata)
-    );
-  };
-// <<<---------
-
-export const signinAsync = (email, password) => async (dispatch) => {
+// export thunks
+export const getAllProducts = () => async (dispatch) => {
   try {
-    const { data } = await axios.post(
-      // 'http://localhost:5050/login',
-      `${import.meta.env.VITE_PROJECT_API}/login`,
-       {
-      email,
-      password,
-    });
-    console.log('within Redux', data)
-    dispatch(loggingIn(data));
-    localStorage.setItem('userInfo', JSON.stringify(data));
+    dispatch(getAllProductsRequest());
+    const data = await productApi.getProducts();
+
+    dispatch(getAllProductsSuccess(data));
   } catch (error) {
-    return error.message;
+    dispatch(getAllProductsFail(error.message));
   }
 };
 
-// export const signOut = () => (dispatch) => {
-//   localStorage.removeItem('userInfo');
-//   localStorage.removeItem('cartItems');
-//   // dispatch({ type: USER_SIGNOUT });
+export const getOneProduct = (id) => async (dispatch) => {
+  // console.log(id)
+  try {
+    dispatch(getOneProductRequest());
+    const data = await productApi.getOneProduct(id);
+    dispatch(getOneProductSuccess(data));
+  } catch (error) {
+    dispatch(getOneProductFail(error.message));
+  }
+};
+
+// export adding and removing cart items thunk
+export const addNremove = (id, qty, flag) => async (dispatch, getState) => {
+  if (flag === 'add') {
+    try {
+      dispatch(addToCartRequest());
+      const data = await productApi.getOneProduct(id);
+      data.num = qty;
+      dispatch(addToCartSuccess({ ...data}));
+      localStorage.setItem(
+        'cartItems',
+        JSON.stringify(getState().products.cart)
+      );
+    } catch (error) {
+      dispatch(addToCartFail(error.message));
+    }
+  } else {
+    try {
+      dispatch(deleteFromCartRequest());
+      const data = await productApi.getOneProduct(id);
+      data.num = qty;
+      dispatch(deleteFromCartSuccess({ ...data}));
+      localStorage.setItem(
+        'cartItems',
+        JSON.stringify(getState().products.cart)
+      );
+    } catch (error) {
+      dispatch(deleteFromCartFail(error.message));
+    }
+  }
+};
+
+// export reducers
+export const {
+  getAllProductsRequest,
+  getAllProductsSuccess,
+  getAllProductsFail,
+  getOneProductRequest,
+  getOneProductSuccess,
+  getOneProductFail,
+  addToCartRequest,
+  addToCartSuccess,
+  addToCartFail,
+  deleteFromCartRequest,
+  deleteFromCartSuccess,
+  deleteFromCartFail,
+} = productSlice.actions;
+
+// export reducer
+export default productSlice.reducer;
+
+// export selectors
+export const selectProducts = (state) => state.products.products;
+export const selectProduct = (state) => state.products.product;
+export const selectCart = (state) => state.products.cart;
+export const selectLoading = (state) => state.products.loading;
+export const selectError = (state) => state.products.error;
+
+
+// // // Admin parts
+// create product
+// export const createProduct = (product) => async (dispatch) => {
+//   try {
+//     dispatch(createProductRequest());
+//     const data = await productApi.createProduct(product);
+//     dispatch(createProductSuccess(data));
+//   } catch (error) {
+//     dispatch(createProductFail(error.message));
+//   }
 // };
 
-export const {
-  getProducts,
-  getSelected,
-  add2cart,
-  removeFromCart,
-  loggingIn,
-  setLoading,
-  catchError,
-} = productSlice.actions;
-export const products = (state) => state.products.data;
-export const selected = (state) => state.products.sdata;
-export const cartdata = (state) => state.products.cdata;
-export const loggingdata = (state) => state.products.logindata;
-export const loading = (state) => state.products.loading;
-export const error = (state) => state.products.error;
+// // export thunk to update product
+// export const updateProduct = (id, product) => async (dispatch) => {
+//   try {
+//     dispatch(createProductRequest());
+//     const data = await productApi.updateProduct(id, product);
+//     dispatch(createProductSuccess(data));
+//   } catch (error) {
+//     dispatch(createProductFail(error.message));
+//   }
+// };
 
-export default productSlice.reducer;
+// // export thunk to delete product
+// export const deleteProduct = (id) => async (dispatch) => {
+//   try {
+//     dispatch(createProductRequest());
+//     const data = await productApi.deleteProduct(id);
+//     dispatch(createProductSuccess(data));
+//   } catch (error) {
+//     dispatch(createProductFail(error.message));
+//   }
+// };
