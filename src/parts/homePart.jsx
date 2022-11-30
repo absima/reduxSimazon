@@ -19,7 +19,7 @@ export default function HomePart(props) {
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  // console.log(products)
+  console.log(products)
 
   useEffect(() => {
     dispatch(getAllProducts());

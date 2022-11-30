@@ -1,4 +1,10 @@
 // updating the product part to use redux
+import Carousel from 'react-bootstrap/Carousel';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+
+import '/node_modules/bootstrap/dist/css/bootstrap.min.css';
+
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams, Link, useLocation } from 'react-router-dom';
@@ -18,11 +24,19 @@ export default function ProductPart() {
   const [qty, setQty] = useState(1);
   const dispatch = useDispatch();
   const product = useSelector(selectProduct);
-  const loading = useSelector(selectLoading);
+
+  let loading = useSelector(selectLoading);
+  if (Object.keys(product).length === 0) {
+    // console.log('condition', product)
+    // return null;
+    loading = true
+  } 
+  // const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
 
-  // console.log(id);
-  // console.log(product);
+  console.log('id', id);
+  console.log('product', product);
+  console.log('loading', loading);
 
   useEffect(() => {
     dispatch(getOneProduct(id));
@@ -32,32 +46,48 @@ export default function ProductPart() {
   //   props.history.push(`/procut/cart/${id}?qty=${qty}`);
   // };
 
+  // function ControlledCarousel() {
+  const [index, setIndex] = useState(0);
+
+  const handleSelect = (selectedIndex, e) => {
+    setIndex(selectedIndex);
+  };
+  // }
+
   return (
     <div>
       {loading ? (
         <LoadingIndicator></LoadingIndicator>
       ) : error ? (
         <Message variant="danger">{error}</Message>
-      ) : (
+      ) : (product !=={})? (
         <div>
           <Link to="/">Back to result</Link>
           <div className="row top">
             <div className="col-2">
-              <img
-                className="large"
-                src={product.image}
-                alt={product.name}
-              ></img>
+              <Row>
+                <Carousel activeIndex={index} onSelect={handleSelect}>
+                  {
+                    product.images.map((image, idx) => (
+                      <Carousel.Item key={idx}>
+                        <Col key={'product_' + String(idx)}>
+                          <img src={image} className="carousel-col" />
+                        </Col>
+                      </Carousel.Item>
+                    ))
+                  }
+                </Carousel>
+              </Row>
             </div>
             <div className="col-1">
               <ul>
                 <li>
-                  <h1>{product.name}</h1>
+                  <h1>{product.title}</h1>
                 </li>
                 <li>
                   <Rating
                     rating={product.rating}
-                    numReviews={product.numReviews}
+                    numReviews={product.stock} // review = stock,  for now
                   ></Rating>
                 </li>
                 <li>Price: ${product.price}</li>
@@ -68,19 +98,19 @@ export default function ProductPart() {
               </ul>
             </div>
             <div className="col-1">
-              <div className="card card-body">
+              <div className="card1 card-body">
                 <ul>
                   <li>
-                    <div className="row">
+                    <div className="row1">
                       <div>Price</div>
                       <div className="price">${product.price}</div>
                     </div>
                   </li>
                   <li>
-                    <div className="row">
+                    <div className="row1">
                       <div>Status</div>
                       <div>
-                        {product.countInStock > 0 ? (
+                        {product.stock % 10 > 0 ? ( // some adjustment
                           <span className="success">In Stock</span>
                         ) : (
                           <span className="danger">Unavailable</span>
@@ -88,19 +118,17 @@ export default function ProductPart() {
                       </div>
                     </div>
                   </li>
-                  {product.countInStock > 0 && (
+                  {product.stock > 0 && (
                     <>
                       <li>
-                        <div className="row">
+                        <div className="row1">
                           <div>Qty</div>
                           <div>
                             <select
                               value={qty}
-                              onChange={
-                                (e) => setQty(e.target.value)
-                              }
+                              onChange={(e) => setQty(e.target.value)}
                             >
-                              {[...Array(product.countInStock).keys()].map(
+                              {[...Array(product.stock % 10).keys()].map(
                                 (x) => (
                                   <option key={x + 1} value={x + 1}>
                                     {x + 1}
@@ -123,7 +151,8 @@ export default function ProductPart() {
             </div>
           </div>
         </div>
-      )}
+      )
+      : null}
     </div>
   );
 }

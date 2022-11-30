@@ -11,7 +11,7 @@ const productSlice = createSlice({
     // product
     product: {},
     // loading
-    loading: false,
+    loading: true,
     //
     error: null,
     // cart

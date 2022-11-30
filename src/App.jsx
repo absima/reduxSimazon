@@ -4,39 +4,85 @@ import { Link, Routes, Route } from 'react-router-dom';
 import HomePart from './parts/homePart';
 import ProductPart from './parts/productPart';
 import CartPart from './parts/cartPart';
-import { useSelector } from 'react-redux';
+import SignInPart from './parts/signInPart';
+import SearchPart from './parts/searchPart';
+import { useSelector, useDispatch } from 'react-redux';
 import { selectCart } from './redux/productSlice';
 
-// write the app function
 function App() {
   const cartItems = useSelector(selectCart);
+  // const userInfo = useSelector(selectUser);
+  // console.log(userInfo)
   console.log('cartingggggggg app', cartItems);
+  // const dispatch = useDispatch();
+  const userInfo = false;
+  // console.log('user info app', userInfo);
 
   const getCartCount = () => {
     return cartItems.reduce((qty, item) => Number(item.num) + qty, 0);
   };
 
+  const signout = () => {
+    localStorage.removeItem('userInfo');
+    localStorage.removeItem('cartItems');
+    // dispatch({ type: USER_SIGNOUT });
+  };
+
+  const signoutHandler = () => {
+    dispatch(signout());
+  };
+
   return (
     <div className="grid-container">
       <header className="row">
-        <div>
-          <Link className="brand" to="/">
-            simazon
-          </Link>
-        </div>
-        <div>
-          <Link to="/cart">
-            Cart
-            {cartItems.length > 0 && (
-              <span className="badge">{getCartCount()}</span>
+        <div className="headerFlex">
+          <div>
+            <Link className="brand" to="/">
+              simazon
+            </Link>
+          </div>
+
+          <div className="row1 center">
+            <input
+              type="text"
+              name="q"
+              id="q"
+              onChange={(e) => setKeyword(e.target.value)}
+            ></input>
+            <button type="submit">Search</button>
+          </div>
+
+          <div>
+            {userInfo ? (
+              <div className="dropdown">
+                <Link to="#">
+                  {userInfo.name} <i className="fa fa-caret-down"></i>{' '}
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="#signout" onClick={signoutHandler}>
+                      Sign Out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login">Sign In</Link>
             )}
-          </Link>
-          <Link to="/signin">Sign In</Link>
+            <Link to="/cart">
+              Cart
+              {cartItems.length > 0 && (
+                <span className="badge">{getCartCount()}</span>
+              )}
+            </Link>
+          </div>
         </div>
       </header>
       <main>
         <Routes>
           <Route path="/" element={<HomePart />} />
+          <Route path="/login" element={<SignInPart />} />
+          <Route path="/register" element={<SignInPart />} />
           <Route path="/product/:id" element={<ProductPart />} />
           <Route path="/cart" element={<CartPart />} />
           <Route path="/cart/:id" element={<CartPart />} />

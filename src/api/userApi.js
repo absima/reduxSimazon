@@ -1,44 +1,83 @@
-// not yet correctd to be usable
 import axios from 'axios';
 
-export const getUsers = (type) =>
-  axios
-    .get(import.meta.env.VITE_API_URL + `users`)
-    .then((res) => res.data)
-    .catch((error) => console.error(error));
-
-export const getOneUser = (id) =>
-  axios
-    .get(import.meta.env.VITE_API_URL + `users/${id}`)
-    .then((res) => res.data)
-    .catch((error) => console.error(error));
-
-// export const getRandomUser = () =>
+// // create user
+// export const createUser = (user) =>
 //   axios
-//     .get(import.meta.env.VITE_API_URL + `users/random`)
+//     .post(import.meta.env.VITE_API_URL + `user`, user)
 //     .then((res) => res.data)
 //     .catch((error) => console.error(error));
 
-export const getUserByName = (name) =>
+// register user using name, email, password
+export const register = (name, email, password, passwordcheck) =>
   axios
-    .get(import.meta.env.VITE_API_URL + `users/${name}`)
+    .post(import.meta.env.VITE_API_URL + `user/register`, { name, email, password, passwordcheck })
+    .then((res) => res.data)  
+    .catch((error) => console.error(error));
+
+
+
+// export const register = (user) =>
+//   axios
+//     .post(import.meta.env.VITE_API_URL + `user/register`, { email, password})
+//     .then((res) => res.data)
+//     .catch((error) => console.error(error));
+
+
+
+// sign in
+export const login = (email, password) =>
+  axios
+    .post(import.meta.env.VITE_API_URL + `user/login`, { email, password })
     .then((res) => res.data)
     .catch((error) => console.error(error));
 
-export const updateUser = (name, win) =>
+// sign out
+export const logout = () =>
   axios
-    .post(import.meta.env.VITE_API_URL + `users/updateuser`, {
-      username: name,
-      win: win,
-    })
+    .get(import.meta.env.VITE_API_URL + `user/logout`)
     .then((res) => res.data)
     .catch((error) => console.error(error));
 
-export const loginUser = (name, win) =>
+// update user by id
+export const updateUser = (id, user) =>
   axios
-    .post(import.meta.env.VITE_API_URL + `users/login`, {
-      username: name,
-      password: password,
-    })
+    .put(import.meta.env.VITE_API_URL + `user/${id}`, user)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+
+// delete user by id
+export const deleteUser = (id) =>
+  axios
+    .delete(import.meta.env.VITE_API_URL + `user/${id}`)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+
+// get user by id
+export const getUser = (id) =>
+  axios
+    .get(import.meta.env.VITE_API_URL + `user/${id}`)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+
+// get all users
+export const getUsers = () =>
+  axios
+    .get(import.meta.env.VITE_API_URL + `user`)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+
+// get user by email
+export const getUserByEmail = (email) =>
+  axios
+    .get(import.meta.env.VITE_API_URL + `user/email/${email}`)
+    .then((res) => res.data)
+    .catch((error) => console.error(error));
+
+// get user by email and password
+export const getUserByEmailAndPassword = (email, password) =>
+  axios
+    .get(
+      import.meta.env.VITE_API_URL + `user/email/${email}/password/${password}`
+    )
     .then((res) => res.data)
     .catch((error) => console.error(error));
