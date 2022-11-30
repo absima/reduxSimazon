@@ -12,52 +12,47 @@ import {
 } from '../redux/productSlice';
 
 export default function CartPart() {
-  const { id } = useParams();
-  console.log(useParams());
-
   const dispatch = useDispatch();
   const cart = useSelector(selectCart);
   const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
   const { search } = useLocation();
+  const { id } = useParams();
+  if (cart.length > 0) {
+    const qtyInUrl = new URLSearchParams(search).get('qty');
+    const quant = qtyInUrl ? Number(qtyInUrl) : cart[cart.length - 1].num;
 
-  console.log('cart first', cart);
+    const qtysInit = cart.map((item) => item.num);
+    const [qties, setQties] = useState([]);
 
-  const qtyInUrl = new URLSearchParams(search).get('qty');
-  const quant = qtyInUrl ? Number(qtyInUrl) : cart[cart.length - 1].num;
+    const [qty, setQty] = useState(quant);
+    const [flag, setFlag] = useState('add');
 
-  const qtysInit = cart.map((item) => item.num);
-  const [qties, setQties] = useState([]);
+    // const qntqnt = qties.length || qtysInit;
 
-  const [qty, setQty] = useState(quant);
-  const [flag, setFlag] = useState('add');
+    console.log('id', id);
+    console.log('qty', qty);
+    console.log('cart', cart);
+    console.log('qties', qties);
+    console.log('qtysInit', qtysInit);
 
-  // const qntqnt = qties.length || qtysInit;
+    // write useEffect to dispatch addNremove
 
-  console.log('id', id);
-  console.log('qty', qty);
-  console.log('cart', cart);
-  console.log('qties', qties);
-  console.log('qtysInit', qtysInit);
+    useEffect(() => {
+      if (id) {
+        dispatch(addNremove(id, qty, flag));
+      }
+    }, [id, qty, flag, dispatch]);
 
-  // write useEffect to dispatch addNremove
+    // const removeFromCartHandler = (id) => {
+    //   dispatch(deleteFromCart(id));
+    // };
 
-  useEffect(() => {
-    if (id) {
-      dispatch(addNremove(id, qty, flag));
-    }
-  }, [id, qty, flag, dispatch]);
+    const checkoutHandler = () => {
+      props.history.push('/login?redirect=shipping');
+    };
 
-  // const removeFromCartHandler = (id) => {
-  //   dispatch(deleteFromCart(id));
-  // };
-
-  const checkoutHandler = () => {
-    props.history.push('/login?redirect=shipping');
-  };
-
-  return (
-    <>
+    return (
       <div className="row top cartcont">
         <div className="cartdiv">
           <h1>Cart Section</h1>
@@ -101,7 +96,7 @@ export default function CartPart() {
                       </select>
                     </div>
                     <div className="col pricediv">
-                      ${item.price * (qties[idx] || item.num)}
+                      €{item.price * (qties[idx] || item.num)}
                     </div>
                     <div className="col deldiv">
                       <button
@@ -115,9 +110,7 @@ export default function CartPart() {
                         Delete
                       </button>
                     </div>
-                    <div className="col-3 titdiv">
-                      
-                    </div>
+                    <div className="col-3 titdiv"></div>
                   </div>
                 </li>
               ))}
@@ -129,7 +122,7 @@ export default function CartPart() {
             <ul>
               <li>
                 <h2>
-                  Subtotal ({qtysInit.reduce((a, c) => a + c, 0)} items) : $
+                  Subtotal ({qtysInit.reduce((a, c) => a + c, 0)} items) : €
                   {cart.reduce(
                     (a, c, i) => a + c.price * (qties[i] || c.num),
                     0
@@ -150,64 +143,15 @@ export default function CartPart() {
           </div>
         </div>
       </div>
+    );
+  } else {
+    // if cart is empty show this
+    return (
       <div className="row top">
-        {/* {loading ? (
-          <LoadingIndicator></LoadingIndicator>
-        ) : error ? (
-          <Message variant="danger">{error}</Message>
-        ) : (
-          <ul>
-            {cart.map((item, idx) => (
-              <li key={item._id}>
-                <div className="rowcart">
-                  <div className="imagediv">
-                    <img
-                      src={item.thumbnail}
-                      alt={item.title}
-                      className="cartimg"
-                    ></img>
-                  </div>
-                  <div className="min-30">
-                    <Link to={`/product/${item._id}`}>{item.title}</Link>
-                  </div>
-                  <div>
-                    <select
-                      value={qties[idx] || item.num}
-                      onChange={(e) => {
-                        const chosen = Number(e.target.value);
-                        const newQties = [...qties];
-                        newQties[idx] = chosen;
-                        setQties(newQties);
-                        setQty(chosen);
-                        setFlag('add');
-                      }}
-                    >
-                      {[...Array((item.stock % 10) + 1).keys()].map((x) => (
-                        <option key={x + 1} value={x + 1}>
-                          {x + 1}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-                  <div>${item.price * (qties[idx] || item.num)}</div>
-                  <div>
-                    <button
-                      type="button"
-                      onClick={(e) =>
-                        dispatch(
-                          addNremove(id, Number(e.target.value), 'remove')
-                        )
-                      }
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </div>
-              </li>
-            ))}
-          </ul>
-        )} */}
+        <div className="col-2">
+          <h1>Cart is empty</h1>
+        </div>
       </div>
-    </>
-  );
+    );
+  }
 }

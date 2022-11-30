@@ -90,7 +90,7 @@ export default function ProductPart() {
                     numReviews={product.stock} // review = stock,  for now
                   ></Rating>
                 </li>
-                <li>Price: ${product.price}</li>
+                <li>Price: €{product.price}</li>
                 <li>
                   Description:
                   <p>{product.description}</p>
@@ -103,7 +103,7 @@ export default function ProductPart() {
                   <li>
                     <div className="row1">
                       <div>Price</div>
-                      <div className="price">${product.price}</div>
+                      <div className="price">€{product.price}</div>
                     </div>
                   </li>
                   <li>

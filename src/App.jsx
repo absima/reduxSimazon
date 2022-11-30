@@ -4,8 +4,8 @@ import { Link, Routes, Route } from 'react-router-dom';
 import HomePart from './parts/homePart';
 import ProductPart from './parts/productPart';
 import CartPart from './parts/cartPart';
-import SignInPart from './parts/signInPart';
-import SearchPart from './parts/searchPart';
+import SignInOrSignUpPart from './parts/signInNsignUpPart';
+// import SearchPart from './parts/searchPart';
 import { useSelector, useDispatch } from 'react-redux';
 import { selectCart } from './redux/productSlice';
 
@@ -81,8 +81,8 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<HomePart />} />
-          <Route path="/login" element={<SignInPart />} />
-          <Route path="/register" element={<SignInPart />} />
+          <Route path="/login" element={<SignInOrSignUpPart flag='login' />} />
+          <Route path="/register" element={<SignInOrSignUpPart flag='register'/>} />
           <Route path="/product/:id" element={<ProductPart />} />
           <Route path="/cart" element={<CartPart />} />
           <Route path="/cart/:id" element={<CartPart />} />

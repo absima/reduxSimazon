@@ -209,6 +209,7 @@ export const fetchUserByEmail = (email) => async (dispatch) => {
 // export thunk for register
 export const register =
   (name, email, password, passwordcheck) => async (dispatch) => {
+    
     try {
       dispatch(getUserRequest());
       const { data } = await userApi.register(
@@ -217,6 +218,7 @@ export const register =
         password,
         passwordcheck
       );
+      console.log('registration successful')
       dispatch(getUserSuccess(data));
     } catch (error) {
       dispatch(getUserFail(error.message));
@@ -228,6 +230,7 @@ export const login = (email, password) => async (dispatch) => {
   try {
     dispatch(getUserRequest());
     const { data } = await userApi.login(email, password);
+    console.log('login successful')
     dispatch(getUserSuccess(data));
   } catch (error) {
     dispatch(getUserFail(error.message));

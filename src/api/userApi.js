@@ -8,9 +8,9 @@ import axios from 'axios';
 //     .catch((error) => console.error(error));
 
 // register user using name, email, password
-export const register = (name, email, password, passwordcheck) =>
+export const register = (name, email, password, passwordCheck) =>
   axios
-    .post(import.meta.env.VITE_API_URL + `user/register`, { name, email, password, passwordcheck })
+    .post(import.meta.env.VITE_API_URL + `user/register`, { name, email, password, passwordCheck })
     .then((res) => res.data)  
     .catch((error) => console.error(error));
 
