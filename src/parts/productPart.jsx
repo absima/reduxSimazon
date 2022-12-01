@@ -33,10 +33,11 @@ export default function ProductPart() {
   } 
   // const loading = useSelector(selectLoading);
   const error = useSelector(selectError);
-
+  console.log ('-----------------')
   console.log('id', id);
   console.log('product', product);
   console.log('loading', loading);
+  console.log ('+++++++++++++++++')
 
   useEffect(() => {
     dispatch(getOneProduct(id));
@@ -60,7 +61,7 @@ export default function ProductPart() {
         <LoadingIndicator></LoadingIndicator>
       ) : error ? (
         <Message variant="danger">{error}</Message>
-      ) : (product !=={})? (
+      ) : (Object.keys(product).length > 0)? (
         <div>
           <Link to="/">Back to result</Link>
           <div className="row top">
