@@ -13,7 +13,6 @@ import {
 
 export default function CartPart() {
   const { id } = useParams();
-  console.log(useParams());
 
   const dispatch = useDispatch();
   const cart = useSelector(selectCart);
@@ -21,27 +20,18 @@ export default function CartPart() {
   const error = useSelector(selectError);
   const { search } = useLocation();
 
-  console.log('cart first', cart);
-
   const qtyInUrl = new URLSearchParams(search).get('qty');
-  let quant
+  let quant;
   if (cart.length !== 0) {
-    quant = qtyInUrl ? Number(qtyInUrl) : cart[cart.length - 1].num
+    quant = qtyInUrl ? Number(qtyInUrl) : cart[cart.length - 1].num;
+    // dispatch(addNremove({ id, quant }));
+  } else {
+    quant = qtyInUrl ? Number(qtyInUrl) : 1;
     // dispatch(addNremove({ id, quant }));
   }
-  else {
-    quant = qtyInUrl ? Number(qtyInUrl) : 1
-    // dispatch(addNremove({ id, quant }));
-  }
-
-  
-
-
-
 
   // const quant = qtyInUrl ? Number(qtyInUrl) : cart[cart.length - 1].num;
 
-  
   const qtysInit = cart.map((item) => item.num);
   const [qties, setQties] = useState([]);
 
@@ -121,17 +111,13 @@ export default function CartPart() {
                       <button
                         type="button"
                         onClick={(e) =>
-                          dispatch(
-                            addNremove(item._id, item.num, 'remove')
-                          )
+                          dispatch(addNremove(item._id, item.num, 'remove'))
                         }
                       >
                         Delete
                       </button>
                     </div>
-                    <div className="col-3 titdiv">
-                      
-                    </div>
+                    <div className="col-3 titdiv"></div>
                   </div>
                 </li>
               ))}
@@ -164,8 +150,7 @@ export default function CartPart() {
           </div>
         </div>
       </div>
-      <div className="row top">
-      </div>
+      <div className="row top"></div>
     </>
   );
 }
@@ -328,7 +313,6 @@ export default function CartPart() {
 //   }
 // }
 
-
 // // // create cart screen
 // // import { useEffect, useState } from 'react';
 // // import { useParams, useLocation, Link } from 'react-router-dom';
@@ -453,4 +437,3 @@ export default function CartPart() {
 // // };
 
 // // export default CartPart;
-

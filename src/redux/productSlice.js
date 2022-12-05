@@ -13,7 +13,7 @@ const productSlice = createSlice({
     // loading
     loading: true,
     //
-    error: null,
+    error: '',
     // cart
     cart: localStorage.getItem('cartItems')
       ? JSON.parse(localStorage.getItem('cartItems'))
@@ -85,8 +85,6 @@ const productSlice = createSlice({
   },
 });
 
-
-
 // export thunks
 export const getAllProducts = () => async (dispatch) => {
   try {
@@ -118,7 +116,7 @@ export const addNremove = (id, qty, flag) => async (dispatch, getState) => {
       const data = await productApi.getOneProduct(id);
       console.log('add -- addNremove data slice', data);
       data.num = qty;
-      dispatch(addToCartSuccess({ ...data}));
+      dispatch(addToCartSuccess({ ...data }));
       localStorage.setItem(
         'cartItems',
         JSON.stringify(getState().products.cart)
@@ -132,7 +130,7 @@ export const addNremove = (id, qty, flag) => async (dispatch, getState) => {
       const data = await productApi.getOneProduct(id);
       console.log('remove -- addNremove data slice', data);
       data.num = qty;
-      dispatch(deleteFromCartSuccess({ ...data}));
+      dispatch(deleteFromCartSuccess({ ...data }));
       localStorage.setItem(
         'cartItems',
         JSON.stringify(getState().products.cart)
@@ -168,7 +166,6 @@ export const selectProduct = (state) => state.products.product;
 export const selectCart = (state) => state.products.cart;
 export const selectLoading = (state) => state.products.loading;
 export const selectError = (state) => state.products.error;
-
 
 // // // Admin parts
 // create product

@@ -46,7 +46,7 @@ import Carousel from 'react-bootstrap/Carousel';
 //     />
 //     <Carousel.Caption>
 //       <h3>First slide label</h3>
-//       <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+//       <p>""a vitae elit libero, a pharetra augue mollis interdum.</p>
 //     </Carousel.Caption>
 //   </Carousel.Item>
 //   {
