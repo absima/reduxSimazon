@@ -12,7 +12,7 @@ export const getProducts = (type) =>
     .get(import.meta.env.VITE_API_URL + `item`)
     .then((res) => {
       console.log('a');
-      console.log(res.status);
+      console.log(res);
       return res.data;
     })
     .catch((error) => {
