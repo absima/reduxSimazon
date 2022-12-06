@@ -20,10 +20,10 @@ import { Link } from 'react-router-dom';
 const FooterPart = () => {
   return (
     <footer className="footer">
-      <Container>
-        <Row>
-          <Col md={3} sm={6}>
-            <h4>Pages</h4>
+      <Container  >
+        <Row className="align-items-start">
+          <Col md={3} sm={6} >
+            <h3>Pages</h3>
             <ul className="list-unstyled">
               <li>
                 <Link to="/cart">Cart</Link>
@@ -64,13 +64,13 @@ const FooterPart = () => {
               <li>
                 <Link to="/about">About</Link>
               </li>
-              <li>
+              {/* <li>
                 <Link to="/contact">Contact</Link>
-              </li>
+              </li> */}
             </ul>
             {/* </div> */}
           </Col>
-          <Col md={3} sm={6}>
+          <Col md={3} sm={6}  >
             {/* <div className="footer-links"> */}
             <h3>Categories</h3>
             <ul className="list-unstyled">
@@ -101,19 +101,41 @@ const FooterPart = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12}> 
-                <Link to="/">
-                  <FontAwesomeIcon icon={faFacebook} />
-                </Link> 
-                <Link to="/">
-                  <FontAwesomeIcon icon={faTwitter} />
-                </Link> 
-                <Link to="/">
-                  <FontAwesomeIcon icon={faInstagram} />
-                </Link> 
-                <Link to="/">
-                  <FontAwesomeIcon icon={faYoutube} />
-                </Link>
+          <Col md={12}>
+            <div className="footer-logo">
+              {/* <Link to="/">
+                <img
+                  src="/images/img.png"
+                  alt="logo"
+                  style={{ width: '100px', height: '100px' }}
+                />
+              </Link> */}
+            </div>
+          </Col>
+        </Row>
+        <Row
+        // customize height
+          style={{
+            height: '3rem',
+          }}
+
+         >
+
+        </Row>
+        <Row >
+          <Col md={12}>
+            <Link to="/">
+              <FontAwesomeIcon icon={faFacebook} size="lg" />
+            </Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faTwitter} size="lg"/>
+            </Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faInstagram} size="lg"/>
+            </Link>
+            <Link to="/">
+              <FontAwesomeIcon icon={faYoutube} size="lg"/>
+            </Link>
           </Col>
         </Row>
       </Container>
@@ -185,5 +207,3 @@ export default FooterPart;
 //     </footer>
 //   );
 // };
-
-

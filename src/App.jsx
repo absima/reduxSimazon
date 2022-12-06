@@ -38,10 +38,9 @@ function App() {
           <Route path="*" element={<h1>Not Found</h1>} />
         </Routes>
       </main> */}
-      <footer className="row center">
+      {/* <footer className="row center">
         <FooterPart />
-      </footer>{' '}
-      */}
+      </footer> */}
     </div>
   );
 }

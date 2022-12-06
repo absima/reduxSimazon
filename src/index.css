@@ -129,9 +129,10 @@ a.brand {
 .selectCategory{
   width: 7rem;
 }
-/* .search{
-  width: 20rem;
-} */
+.search{
+  display: flex;
+}
+
 .row {
   display: flex;
   flex-wrap: wrap;

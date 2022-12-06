@@ -82,6 +82,7 @@ const productSlice = createSlice({
       state.loading = false;
       state.error = action.payload;
     },
+
   },
 });
 
@@ -140,6 +141,8 @@ export const addNremove = (id, qty, flag) => async (dispatch, getState) => {
     }
   }
 };
+
+
 
 // export reducers
 export const {

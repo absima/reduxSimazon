@@ -18,13 +18,15 @@ import ProfilePage from './parts/profilePart';
 import RegisteredPage from './parts/registeredPage';
 import LoggedInPart from './parts/loggedInPage';
 import AuthLayout from './parts/layout';
+import SearchPart from './parts/searchPart';
 
 const browserRouter = createBrowserRouter([
   {
     path: '/',
     element: <AuthLayout />,
     children: [
-      { path: '/', element: <HomePart /> },
+      // { path: '/', element: <HomePart /> },
+      { path: '/', element: <HomePage /> },
       { path: '/product/:id', element: <ProductPart /> },
       { path: '/cart/:id', element: <CartPart /> },
       { path: '/cart', element: <CartPart /> },
@@ -39,7 +41,9 @@ const browserRouter = createBrowserRouter([
       // { path: '/loggedin', element: <LoggedInPart /> },
 
       { path: '/category/:id', element: <HomePage /> },
-      { path: '/search', element: <HomePage /> },
+      // path to search page
+      // { path: '/?filter=:searchstring', element: <SearchPart />},
+      { path: '/:search', element: <SearchPart/> },
       { path: '*', element: <h1>Not Found</h1> },
     ],
   },
@@ -47,9 +51,7 @@ const browserRouter = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
-    <RouterProvider router={browserRouter}>
-      <App />
-    </RouterProvider>
+    <RouterProvider router={browserRouter} />
   </Provider>
 );
 
