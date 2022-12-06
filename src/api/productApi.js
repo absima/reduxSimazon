@@ -10,8 +10,16 @@ export const createProduct = (product) =>
 export const getProducts = (type) =>
   axios
     .get(import.meta.env.VITE_API_URL + `item`)
-    .then((res) => res.data)
-    .catch((error) => console.error(error));
+    .then((res) => {
+      console.log('a');
+      console.log(res.status);
+      return res.data;
+    })
+    .catch((error) => {
+      console.log('b');
+      console.error(error)
+      return []
+    });
 
 export const getOneProduct = (id) =>
   axios
@@ -33,7 +41,7 @@ export const deleteProduct = (id) =>
     .catch((error) => console.error(error));
 
 // add product to cart in db
-export const addProductToCart = (id, product) =>  
+export const addProductToCart = (id, product) =>
   axios
     .put(import.meta.env.VITE_API_URL + `item/cart/${id}`, product)
     .then((res) => res.data)
@@ -51,5 +59,3 @@ export const getCart = (id) =>
     .get(import.meta.env.VITE_API_URL + `item/cart/${id}`)
     .then((res) => res.data)
     .catch((error) => console.error(error));
-
-    
