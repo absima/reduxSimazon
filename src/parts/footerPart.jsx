@@ -20,7 +20,9 @@ import { Link } from 'react-router-dom';
 const FooterPart = () => {
   return (
     <footer className="footer">
+      
       <Container  >
+      <hr />
         <Row className="align-items-start">
           <Col md={3} sm={6} >
             <h3>Pages</h3>

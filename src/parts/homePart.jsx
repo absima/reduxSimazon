@@ -12,6 +12,8 @@ import {
   selectLoading,
   selectError,
 } from '../redux/productSlice';
+import { Col, Container, Row } from 'react-bootstrap';
+import { Route } from 'react-router-dom';
 
 export default function HomePart(props) {
   const dispatch = useDispatch();
@@ -24,65 +26,26 @@ export default function HomePart(props) {
   }, []);
 
   return (
-    <div>
-      {loading ? (
-        <LoadingIndicator></LoadingIndicator>
-      ) : error ? (
-        <Message variant="danger">{error}</Message>
-      ) : (
-        <div className="center">
-          {products.map((product) => (
-            <Product key={product._id} product={product}></Product>
-          ))}
-        </div>
-      )}
-    </div>
+    <Container>
+      <Row>
+        <Col>
+          <h1>Latest Products</h1>
+        </Col>
+      </Row>
+      <Row>
+        {loading ? (
+          <LoadingIndicator />
+        ) : error ? (
+          <Message variant="danger">{error}</Message>
+        ) : (
+          products.map((product) => (
+            <Col key={product._id} sm={12} md={6} lg={4} xl={3}>
+              <Product product={product} />
+            </Col>
+          ))
+        )}
+      </Row>
+    </Container>
   );
 }
 
-// // import { useContext } from 'react';
-// // import { ProjContext } from '../contexter';
-// import Product from '../components/product';
-// import LoadingIndicator from '../components/loading';
-// import Message from '../components/message';
-
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// // import listProducts from '../redux/productActions';
-// // import { productList } from '../redux/prodredux';
-// // import { getProducts } from '../api/productApi';
-
-// import {
-//   getProductsAsync,
-//   products,
-//   loading,
-//   error,
-// } from '../redux/productSlice';
-
-// export default function HomePart() {
-//   const productList = useSelector(products);
-//   const onload = useSelector(loading);
-//   const err = useSelector(error);
-//   const dispatch = useDispatch();
-//   console.log(productList)
-
-//   useEffect(() => {
-//     dispatch(getProductsAsync());
-//   }, []);
-
-//   return (
-//     <div>
-//       {onload ? (
-//         <LoadingIndicator />
-//       ) : err ? (
-//         <Message variant="danger">{err}</Message>
-//       ) : (
-//         <div className="row center">
-//           {productList.map((product) => (
-//             <Product key={product._id} product={product} />
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }

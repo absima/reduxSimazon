@@ -1,107 +1,154 @@
 import { Link } from 'react-router-dom';
-import Rating from '../components/rating';
-import background from '/images/christmas.png';
+import { Container, Row, Col, Carousel } from 'react-bootstrap';
+import background from '/images/pnew.jpg';
 export default function HomePage(props) {
   return (
-    <div
-      className="container maindiv"
-      // style={{
-      //   backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/NativityChristmasLights2.jpg/1599px-NativityChristmasLights2.jpg')`,
-      //   // backgroundImage: `url(${background})`,
-      //   backgroundRepeat: 'no-repeat',
-      //   backgroundSize: 'cover',
-      //   backgroundPosition: 'center',
-      //   height: '100vh',
-      //   // width: '100vw',
-      // }}
+    <Container
+      className="maindiv"
+      style={{
+        backgroundImage: 'url(' + background + ')',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        height: '50vh',
+      }}
     >
-      {/* <h1>Home Page</h1>
-      <div>
-        <h2>Featured Products</h2>
-        <div>
-          <div>
-            <div>
-              <Link to="/product/63858c3dda33dbfc031a95ba">
+      <Row className="align-items-start">
+        <Col xs={12} md={6} lg={6}>
+          <h2 className="simplyamazon">simply amazon</h2>
+          <Link to="/products" className="btn btn-primary">
+            Shop Now
+          </Link>
+          <h1
+            style={{
+              fontSize: '2.5rem',
+              fontWeight: 'bold',
+              paddingLeft: '5rem',
+              marginTop: '15rem',
+            }}
+          >
+            <div
+              style={{
+                color: 'green',
+              }}
+            >
+              Oh deer...,
+            </div>
+            <div
+              style={{
+                color: 'red',
+                paddingLeft: '2.5rem',
+              }}
+            >
+              Christmas
+              <div
+                style={{
+                  paddingLeft: '2.5rem',
+                }}
+              >
+                {' '}
+                is almost here!
+              </div>
+            </div>
+          </h1>
+          {/* </div> */}
+        </Col>
+
+        <Col xs={12} md={6} lg={6}>
+          <Row>
+            <Carousel>
+              <Carousel.Item>
                 <img
-                  src="https://dummyjson.com/image/i/products/6/thumbnail.png"
-                  alt="product"
+                  className="d-block w-100 carouselimage"
+                  src="./images/chrisgift.jpeg"
+                  alt="christmas"
                 />
-              </Link>
-            </div>
-            <div>
-              <Link to="/product/63858c3dda33dbfc031a95ba">Product 1</Link>
-            </div>
-            <div>
-              <Rating rating={4.5} numReviews={10}></Rating>
-            </div>
-            <div>€ 10</div>
-          </div>
-          <div>
-            <div>
-              <Link to="/product/63858c3dda33dbfc031a95ba">
+
+                <Carousel.Caption className="carouselcaption">
+                  <h3 className="caroheading">Christmas Gifts</h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+              <Carousel.Item>
                 <img
-                  src="https://dummyjson.com/image/i/products/6/thumbnail.png"
-                  alt="product"
+                  className="d-block w-100 carouselimage"
+                  src="./images/forher.webp"
+                  alt="for women"
                 />
-              </Link>
-            </div>
-            <div>
-              <Link to="/product/63858c3dda33dbfc031a95ba">Product 1</Link>
-            </div>
-            <div>
-              <Rating rating={4.5} numReviews={10}></Rating>
-            </div>
-            <div>€ 10</div>
-          </div>
-        </div>
-      </div> */}
-    </div>
+                <Carousel.Caption className="carouselcaption">
+                  <h3>Gifts for her</h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                </Carousel.Caption>
+              </Carousel.Item>
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carouselimage"
+                  src="./images/forhim.jpeg"
+                  alt="for men"
+                />
+                <Carousel.Caption className="carouselcaption">
+                  <h3>Gifts for him</h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+              <Carousel.Item>
+                <img
+                  className="d-block w-100  carouselimage"
+                  src="./images/forkids.jpeg"
+                  alt="for kids"
+                />
+
+                <Carousel.Caption className="carouselcaption">
+                  <h3>Gifts for kids</h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carouselimage"
+                  src="./images/featured.jpeg"
+                  alt="featured"
+                />
+
+                <Carousel.Caption className="carouselcaption">
+                  <h3> Featured products </h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                </Carousel.Caption>
+              </Carousel.Item>
+
+              <Carousel.Item>
+                <img
+                  className="d-block w-100 carouselimage"
+                  src="./images/onsale.jpeg"
+                  alt="on sale"
+                />
+                <Carousel.Caption className="carouselcaption">
+                  <h3> On Sale</h3>
+                  <Link to="/products" className="btn btn-primary">
+                    click here
+                  </Link>
+                  {/* <p>
+                    Nulla vitae elit libero, a pharetra augue mollis interdum.
+                  </p> */}
+                </Carousel.Caption>
+              </Carousel.Item>
+            </Carousel>
+          </Row>
+        </Col>
+      </Row>
+    </Container>
   );
 }
-
-// // import { useContext } from 'react';
-// // import { ProjContext } from '../contexter';
-// import Product from '../components/product';
-// import LoadingIndicator from '../components/loading';
-// import Message from '../components/message';
-
-// import { useEffect } from 'react';
-// import { useDispatch, useSelector } from 'react-redux';
-// // import listProducts from '../redux/productActions';
-// // import { productList } from '../redux/prodredux';
-// // import { getProducts } from '../api/productApi';
-
-// import {
-//   getProductsAsync,
-//   products,
-//   loading,
-//   error,
-// } from '../redux/productSlice';
-
-// export default function HomePart() {
-//   const productList = useSelector(products);
-//   const onload = useSelector(loading);
-//   const err = useSelector(error);
-//   const dispatch = useDispatch();
-//   console.log(productList)
-
-//   useEffect(() => {
-//     dispatch(getProductsAsync());
-//   }, []);
-
-//   return (
-//     <div>
-//       {onload ? (
-//         <LoadingIndicator />
-//       ) : err ? (
-//         <Message variant="danger">{err}</Message>
-//       ) : (
-//         <div className="row center">
-//           {productList.map((product) => (
-//             <Product key={product._id} product={product} />
-//           ))}
-//         </div>
-//       )}
-//     </div>
-//   );
-// }

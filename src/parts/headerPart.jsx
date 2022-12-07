@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faLeftLong } from '@fortawesome/free-solid-svg-icons';
 import { Form, Link, useSearchParams, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCart } from '../redux/productSlice';
@@ -85,97 +85,122 @@ export default function HeaderPart() {
   return (
     <header className="header">
       <Container>
-        <Row>
-          <Col xs={12} md={3}>
-            {/* <div className="logo">
-              <Link to="/">
-                <img src="/images/logo.png" alt="logo" />
-              </Link>
-            </div> */}
+        <Row className="align-items-center">
+          <Col xs={12} md={2}>
+            <Link className="brand" to="/">
+              simazon
+
+              {/* <p
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  paddingLeft: '1.5rem',
+                  marginTop: '-1rem',
+                }}
+                >
+                  simply amazon
+                </p> */}
+            </Link>
+          </Col>
+
+          {/*           
+            <Row>
+              <Link className="brand" to="/">
+                simazon
+                <Link
+
             <div>
               <Link className="brand" to="/">
                 simazon
-              </Link>
-            </div>
-          </Col>
-          <Col xs={12} md={6}>
-            <div className="search">
-              <select
-                className="selectCategory"
-                name="category"
-                value="ab"
-                // value={filter}
-                // value = {searchParams.get("filter") || ""}
-                onChange={handleSelect}
-              >
-                <option value="">...</option>
-                <option value="smartphones">Smartphones</option>
-                <option value="laptops">Laptops</option>
-                <option value="fragrances">Fragrances</option>
-                <option value="skincare">Skin Care</option>
-                <option value="groceries">Groceries</option>
-                <option value="home-decoration">Decos</option>
-              </select>
-              <Form
-                onSubmit={
-                  handleSubmit
-                  // handleFilter
-                }
-              >
-                <input
-                  className="input"
-                  name="search"
-                  type="text"
-                  placeholder="Search..."
-                  value={filter}
-                  onChange={
-                    handleFilter
-                    // handleSubmit
-                  }
-                />
-                <button type="submit">
-                  <i className="fa fa-search"></i>
-                </button>
-              </Form>
-            </div>
-          </Col>
-          <Col xs={12} md={3}>
-            <div className="header__cart">
-              <Link to="/cart">
-                <FontAwesomeIcon icon={faCartShopping} />
-                {cartItems > 0 && <span className="notif">{cartItems}</span>}
-              </Link>
-              {controller ? (
-                <div className="dropdown">
-                  <Link to="/#">
-                    {prms.username} <i className="fa fa-caret-down"></i>
-                  </Link>
-                  <ul className="dropdown-content">
-                    <li>
-                      <Link to="/#">Profile</Link>
-                    </li>
-                    <li>
-                      <Link to="/#">Orders</Link>
-                    </li>
-                    <li>
-                      <Link to="/#">Messages</Link>
-                    </li>
-                    <li>
-                      <Link to="/#">Settings</Link>
-                    </li>
-                    <li>
-                      <Link to="/" onClick={handleLogout}>
-                        Log out
-                      </Link>
-                    </li>
-                  </ul>
+                <div
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                  paddingLeft: '1.5rem',
+                  marginTop: '-1rem',
+                }}
+                >
+                  simply amazon
                 </div>
-              ) : (
-                <Link to="/login">Log in</Link>
-              )}
+              </Link>
             </div>
+            
+          </Col> */}
+          <Col xs={12} md={8} className="search">
+            <select
+              className="selectCategory"
+              name="category"
+              value="ab"
+              // value={filter}
+              // value = {searchParams.get("filter") || ""}
+              onChange={handleSelect}
+            >
+              <option value="">...</option>
+              <option value="smartphones">Smartphones</option>
+              <option value="laptops">Laptops</option>
+              <option value="fragrances">Fragrances</option>
+              <option value="skincare">Skin Care</option>
+              <option value="groceries">Groceries</option>
+              <option value="home-decoration">Decos</option>
+            </select>
+            <Form
+              onSubmit={
+                handleSubmit
+                // handleFilter
+              }
+            >
+              <input
+                className="input"
+                name="search"
+                type="text"
+                placeholder="Search..."
+                value={filter}
+                onChange={
+                  handleFilter
+                  // handleSubmit
+                }
+              />
+              <button type="submit" className="selectCategory">
+                <i className="fa fa-search "></i>
+              </button>
+            </Form>
+          </Col>
+          <Col xs={12} md={2}>
+            {controller ? (
+              <div className="dropdown">
+                <Link to="/#">
+                  {prms.username} <i className="fa fa-caret-down"></i>
+                </Link>
+                <ul className="dropdown-content">
+                  <li>
+                    <Link to="/#">Profile</Link>
+                  </li>
+                  <li>
+                    <Link to="/#">Orders</Link>
+                  </li>
+                  <li>
+                    <Link to="/#">Messages</Link>
+                  </li>
+                  <li>
+                    <Link to="/#">Settings</Link>
+                  </li>
+                  <li>
+                    <Link to="/" onClick={handleLogout}>
+                      Log out
+                    </Link>
+                  </li>
+                </ul>
+              </div>
+            ) : (
+              <Link to="/login">Log in</Link>
+            )}
+            <Link to="/cart">
+            &nbsp; <FontAwesomeIcon icon={faCartShopping} size="lg" /> 
+              {cartItems > 0 && <span className="notif">{cartItems}</span>}
+            </Link>
           </Col>
         </Row>
+        <hr />
       </Container>
     </header>
   );
