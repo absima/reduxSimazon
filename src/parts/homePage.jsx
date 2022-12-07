@@ -23,7 +23,7 @@ export default function HomePage(props) {
             style={{
               fontSize: '2.5rem',
               fontWeight: 'bold',
-              paddingLeft: '5rem',
+              paddingLeft: '2rem',
               marginTop: '15rem',
             }}
           >
@@ -40,15 +40,7 @@ export default function HomePage(props) {
                 paddingLeft: '2.5rem',
               }}
             >
-              Christmas
-              <div
-                style={{
-                  paddingLeft: '2.5rem',
-                }}
-              >
-                {' '}
-                is almost here!
-              </div>
+              Christmas is here!
             </div>
           </h1>
           {/* </div> */}
