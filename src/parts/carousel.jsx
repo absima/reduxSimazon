@@ -14,7 +14,7 @@ import Carousel from 'react-bootstrap/Carousel';
         <Carousel.Caption className="carocaption">
           <button
             type="button"
-            className="btn btn-primary button_perfumier"
+            className="btn btn-buttoncolor button_perfumier"
             onClick={(event) => {
               !selected.includes(item.title) && selected.push(item.title);
               console.log(selected);

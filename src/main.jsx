@@ -4,7 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 // import CtxtProvider from './contexter';
 import App from './App';
 import './index.css';
-
+import Snowfall from 'react-snowfall';
 import { Provider } from 'react-redux';
 import store from './redux/store';
 
@@ -32,18 +32,14 @@ const browserRouter = createBrowserRouter([
       { path: '/cart', element: <CartPart /> },
       { path: '/register', element: <SignInOrSignUpPart flag="register" /> },
       { path: '/login', element: <SignInOrSignUpPart flag="login" /> },
-      {
-        path: '/profile',
-        element: <ProfilePage />,
-        children: [{ path: '/profile/:username', element: <LoggedInPart /> }],
-      },
+      { path: '/profile/:username', element: <LoggedInPart /> },
       { path: '/registered', element: <RegisteredPage /> },
       // { path: '/loggedin', element: <LoggedInPart /> },
 
       { path: '/category/:id', element: <HomePage /> },
       // path to search page
       // { path: '/?filter=:searchstring', element: <SearchPart />},
-      { path: '/:search', element: <SearchPart/> },
+      { path: '/:search', element: <SearchPart /> },
       { path: '*', element: <h1>Not Found</h1> },
     ],
   },
@@ -52,6 +48,7 @@ const browserRouter = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root')).render(
   <Provider store={store}>
     <RouterProvider router={browserRouter} />
+    {/* <Snowfall />  */}
   </Provider>
 );
 

@@ -59,7 +59,11 @@ export default function Rating(props) {
           }
         ></i>
       </span>
-      <span>{numReviews + ' reviews'}</span>
+      <span 
+      style={{
+        color: '#a4a4a4'}
+      }
+      > {numReviews + ' reviews'}</span>
     </div>
   );
 }

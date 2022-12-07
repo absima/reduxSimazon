@@ -1,7 +1,7 @@
 import Product from '../components/product';
 import LoadingIndicator from '../components/loading';
 import Message from '../components/message';
-
+import { Row } from 'react-bootstrap';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -41,14 +41,15 @@ export default function SearchPart( props) {
   }, []);
 
   return (
-    <div>
+    <div className='container maindiv'>
       {loading ? (
         <LoadingIndicator></LoadingIndicator>
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div className="row center">
-          {products
+        // <div className="row, center">
+          <Row>
+{products
             .filter((product) => {
               // const filter = searchParams.get('filter');
               // console.log('ffffffiiiiiilllllltttttteeeeer', filter);
@@ -78,7 +79,9 @@ export default function SearchPart( props) {
                 <Product key={item._id} product={item}></Product>
               // </Link>
             ))}
-        </div>
+          </Row>
+          
+        // </div>
       )}
       <Outlet />
     </div>

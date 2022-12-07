@@ -86,7 +86,7 @@ export const registerUser = (name, username, email, password) => async (dispatch
     dispatch(registerUserSuccess(data));
     // dispatch(setMessage(data.message));
   } catch (error) {
-    dispatch(registerUserFail(error.response.data.message));
+    dispatch(registerUserFail(error.message));
   }
 };
 
@@ -97,7 +97,7 @@ export const loginUser = (username, password) => async (dispatch) => {
     dispatch(loginUserSuccess(data));
     // dispatch(setMessage(data.message));
   } catch (error) {
-    dispatch(loginUserFail(error.response.data.message));
+    dispatch(loginUserFail(error.message));
   }
 };
 
@@ -108,19 +108,21 @@ export const logoutUser = () => async (dispatch) => {
     dispatch(logoutUserSuccess(data));
     // dispatch(setMessage(data.message));
   } catch (error) {
-    dispatch(logoutUserFail(error.response.data.message));
+    dispatch(logoutUserFail(error.message));
   }
 };
 
 export const getUserProfile = (username) => async (dispatch) => {
   try {
-    console.log('in')
+    console.log('in', username)
     dispatch(getUserProfileRequest());
-    const { data } = await userApi.getProfile(username);
-    console.log('data', data);
+    const res = await userApi.getProfile(username);
+
+    // const { data } = await userApi.getProfile(username);
+    console.log('data', res);
     dispatch(getUserProfileSuccess(data));
   } catch (error) {
-    dispatch(getUserProfileFail(error.response.data.message));
+    dispatch(getUserProfileFail(error.message));
   }
 };
 

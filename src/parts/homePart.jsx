@@ -30,7 +30,7 @@ export default function HomePart(props) {
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : (
-        <div className="row center">
+        <div className="center">
           {products.map((product) => (
             <Product key={product._id} product={product}></Product>
           ))}

@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
-
+import axios from 'axios';
 import { useAuth } from '../auth/useAuth';
 
 import { useDispatch, useSelector, ReactReduxContext } from 'react-redux';
@@ -27,6 +27,7 @@ export default function SignInOrSignUpPart({ flag }) {
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+  const [register, setRegister] = useState('');
 
   const { login } = useAuth();
 
@@ -139,6 +140,47 @@ export default function SignInOrSignUpPart({ flag }) {
     }
   };
 
+  // // submit handler for register
+  // const registerSubmitHandler = (e) => {
+  //   e.preventDefault();
+  //   if (nameValid && usernameValid && emailValid && passwordValid) {
+  //     dispatch(
+  //       registerUser(name, username, email, password, confirmPassword)
+  //     ).then((res) => {
+  //       console.log('response ------', res);
+  //       setSuccessful(true);
+  //     });
+  //   }
+  // };
+
+  const handleSubmitRegister = (e) => {
+    // prevent the form from refreshing the whole page
+    e.preventDefault();
+
+    // set configurations
+    const configuration = {
+      method: 'post',
+      url: 'http://localhost:5050/user/register',
+      data: {
+        name,
+        username,
+        email,
+        password,
+      },
+    };
+
+    // make the API call
+    axios(configuration)
+      .then((result) => {
+        setRegister(true);
+        console.log('register set to true in config', register);
+      })
+      .catch((error) => {
+        console.log('error here in registration');
+        error = new Error();
+      });
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (flag === 'login') {
@@ -165,7 +207,6 @@ export default function SignInOrSignUpPart({ flag }) {
   // login submit handler
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log('eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee');
     const username = e.target[0].value;
     const password = e.target[1].value;
     // const formData = Object.fromEntries(new FormData(e.currentTarget));
@@ -182,7 +223,9 @@ export default function SignInOrSignUpPart({ flag }) {
       mode: 'cors',
     });
     const token = await res.json();
+
     login(token, username);
+
     const to = `/profile/${username}`;
     console.log(to);
     return () => navigate(to, { replace: true });
@@ -224,12 +267,15 @@ export default function SignInOrSignUpPart({ flag }) {
   }, [user]);
 
   return (
-    <div>
+    <div className="container maindiv">
       {flag === 'login' ? (
-        <Form className="form" onSubmit={
-          // submitHandler
-          handleSubmit
-          }>
+        <Form
+          className="form"
+          onSubmit={
+            // submitHandler
+            handleSubmit
+          }
+        >
           <div>
             <h1>Sign In</h1>
           </div>
@@ -257,7 +303,7 @@ export default function SignInOrSignUpPart({ flag }) {
           </div>
           <div>
             <label />
-            <button className="primary" type="submit">
+            <button className="buttoncolor" type="submit">
               Sign In
             </button>
           </div>
@@ -269,7 +315,7 @@ export default function SignInOrSignUpPart({ flag }) {
           </div>
         </Form>
       ) : flag === 'register' ? (
-        <Form className="form" onSubmit={submitHandler}>
+        <Form className="form" onSubmit={handleSubmitRegister}>
           <div>
             <h1>Create Account</h1>
           </div>
@@ -326,7 +372,7 @@ export default function SignInOrSignUpPart({ flag }) {
           </div>
           <div>
             <label />
-            <button className="primary" type="submit">
+            <button className="buttoncolor" type="submit">
               Register
             </button>
           </div>
@@ -336,6 +382,7 @@ export default function SignInOrSignUpPart({ flag }) {
               Already have an account? <Link to={`/login`}>Sign In</Link>
             </div>
           </div>
+          {register ? navigate('/registered', { replace: true }) : null}
         </Form>
       ) : (
         <Form className="form" onSubmit={handleLogout}>
@@ -348,7 +395,7 @@ export default function SignInOrSignUpPart({ flag }) {
           </div>
           <div>
             <label />
-            <button className="primary" type="submit">
+            <button className="buttoncolor" type="submit">
               Sign Out
             </button>
           </div>
@@ -541,7 +588,7 @@ export default function SignInOrSignUpPart({ flag }) {
 // //             <div>
 // //               <label />
 // //               <button
-// //                 className="primary"
+// //                 className="buttoncolor"
 // //                 type="submit"
 // //                 onClick={
 // //                   (e) => {
@@ -615,7 +662,7 @@ export default function SignInOrSignUpPart({ flag }) {
 // //             <div>
 // //               <label />
 // //               <button
-// //                 className="primary"
+// //                 className="buttoncolor"
 // //                 type="submit"
 // //                 // onClick={registerFunc}
 // //               >

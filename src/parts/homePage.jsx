@@ -1,18 +1,28 @@
 import { Link } from 'react-router-dom';
 import Rating from '../components/rating';
-
+import background from '/images/christmas.png';
 export default function HomePage(props) {
   return (
-    <div>
-      <h1>Home Page</h1>
-      {/* featured products */}
+    <div
+      className="container maindiv"
+      // style={{
+      //   backgroundImage: `url('https://upload.wikimedia.org/wikipedia/commons/thumb/8/8f/NativityChristmasLights2.jpg/1599px-NativityChristmasLights2.jpg')`,
+      //   // backgroundImage: `url(${background})`,
+      //   backgroundRepeat: 'no-repeat',
+      //   backgroundSize: 'cover',
+      //   backgroundPosition: 'center',
+      //   height: '100vh',
+      //   // width: '100vw',
+      // }}
+    >
+      {/* <h1>Home Page</h1>
       <div>
         <h2>Featured Products</h2>
         <div>
           <div>
             <div>
               <Link to="/product/63858c3dda33dbfc031a95ba">
-                <img 
+                <img
                   src="https://dummyjson.com/image/i/products/6/thumbnail.png"
                   alt="product"
                 />
@@ -44,7 +54,7 @@ export default function HomePage(props) {
             <div>€ 10</div>
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

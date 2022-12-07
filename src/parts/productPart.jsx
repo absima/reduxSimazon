@@ -52,14 +52,14 @@ export default function ProductPart() {
   // }
 
   return (
-    <div>
+    <div className="container maindiv">
       {loading ? (
         <LoadingIndicator></LoadingIndicator>
       ) : error ? (
         <Message variant="danger">{error}</Message>
       ) : Object.keys(product).length > 0 ? (
         <Container>
-          <Link className="btn btn-light my-3" to="/">
+          <Link className="btn btn-light my-3" to="/home">
             Go Back
           </Link>
           <Row>
@@ -102,13 +102,13 @@ export default function ProductPart() {
               <div className="card1 card-body">
                 <ul>
                   <li>
-                    <div className="row1">
+                    <div className="liprodiv">
                       <div>Price</div>
                       <div className="price">€{product.price}</div>
                     </div>
                   </li>
                   <li>
-                    <div className="row1">
+                    <div className="liprodiv">
                       <div>Status</div>
                       <div>
                         {product.stock % 10 > 0 ? ( // some adjustment
@@ -122,7 +122,7 @@ export default function ProductPart() {
                   {product.stock > 0 && (
                     <>
                       <li>
-                        <div className="row1">
+                        <div className="liprodiv">
                           <div>Qty</div>
                           <div>
                             <select
@@ -142,7 +142,9 @@ export default function ProductPart() {
                       </li>
                       <li>
                         <Link to={`/cart/${id}?qty=${qty}`}>
-                          <button className="primary block">Add to Cart</button>
+                          <button className="buttoncolor block">
+                            Add to Cart
+                          </button>
                         </Link>
                       </li>
                     </>
@@ -263,13 +265,13 @@ export default function ProductPart() {
 //               <div className="card1 card-body">
 //                 <ul>
 //                   <li>
-//                     <div className="row1">
+//                     <div className="liprodiv">
 //                       <div>Price</div>
 //                       <div className="price">€{product.price}</div>
 //                     </div>
 //                   </li>
 //                   <li>
-//                     <div className="row1">
+//                     <div className="liprodiv">
 //                       <div>Status</div>
 //                       <div>
 //                         {product.stock % 10 > 0 ? ( // some adjustment
@@ -283,7 +285,7 @@ export default function ProductPart() {
 //                   {product.stock > 0 && (
 //                     <>
 //                       <li>
-//                         <div className="row1">
+//                         <div className="liprodiv">
 //                           <div>Qty</div>
 //                           <div>
 //                             <select
@@ -303,7 +305,7 @@ export default function ProductPart() {
 //                       </li>
 //                       <li>
 //                         <Link to={`/cart/${id}?qty=${qty}`}>
-//                           <button className="primary block">Add to Cart</button>
+//                           <button className="buttoncolor block">Add to Cart</button>
 //                         </Link>
 //                       </li>
 //                     </>

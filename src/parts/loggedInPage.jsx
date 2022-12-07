@@ -1,32 +1,3 @@
-
-
-// import React from 'react';
-// import { Outlet } from 'react-router-dom';
-// import { useParams } from 'react-router-dom';
-
-// import { useSelector } from 'react-redux';
-// import { selectUser } from '../redux/userSlice';
-// import { selectCart } from '../redux/productSlice';
-
-
-// const LoggedInPage = () => {
-//   const params = useParams();
-//   console.log(params)
-//   return (
-//     <div className="registered-page">
-//       <div className="registered-page__container">
-//         <div className="registered-page__container__title">
-//           You are logged in
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default LoggedInPage;
-
-// create a new component called ProfilePage that will be used to display the user's profile information using the user's username as a parameter in the URl.
-
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
@@ -45,10 +16,100 @@ const ProfilePage = () => {
   // }, [dispatch, params.username]);
 
   return (
-    <div className="profile-page">
+    <div className="container, maindiv">
+      <h1>Profile Page</h1>
       <div className="profile-page__container">
         <div className="profile-page__container__title">
-          {params.username}'s Profile
+          <h1
+            style={{
+              fontSize: '2rem',
+              fontWeight: 'bold',
+            }}
+          >
+            Welcome back, {params.username}!
+          </h1>
+
+          <p
+            style={{
+              fontSize: '1.5rem',
+              fontWeight: 'bold',
+            }}
+          >
+            You have{' '}
+            {cart.length > 0 ? cart.reduce((a, item) => a + item.num, 0) : 0}{' '}
+            items in your cart
+          </p>
+          {cart.length > 0 ? (
+            <div>
+              <p
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                Your cart:
+              </p>
+              <ol>
+                {cart.map((item) => (
+                  <li key={item._id}>
+                    <div>
+                    Name: {item.title} 
+                    </div>
+                    <div>
+                    Description: {item.description} 
+                    </div>
+                    <div>
+                    Quantity: x {item.num? item.num : 1}
+                    </div>
+                    <div>
+                    Price per piece: ${item.price}
+                    </div>
+                    <div>
+                    Subtotal price: ${item.num * item.price}
+                    </div>
+
+                    
+                  </li>
+                ))}
+              </ol>
+
+              <p
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                Total: ${cart.reduce((a, item) => a + item.num * item.price, 0)}
+              </p>
+
+              <button
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                Checkout
+              </button>
+
+              <button
+                style={{
+                  fontSize: '1.5rem',
+                  fontWeight: 'bold',
+                }}
+              >
+                Clear Cart
+              </button>
+            </div>
+          ) : (
+            <p
+              style={{
+                fontSize: '1.5rem',
+                fontWeight: 'bold',
+              }}
+            >
+              Your cart is empty
+            </p>
+          )}
         </div>
       </div>
     </div>
@@ -56,93 +117,3 @@ const ProfilePage = () => {
 };
 
 export default ProfilePage;
-
-//   const user = useSelector(selectUser);
-//   const cart = useSelector(selectCart);
-//   const params = useParams();
-//   const { username } = params;
-//   const { name, email, password } = user;
-
-//   useEffect(() => {
-//     getUserProfile(username);
-//   }, [username]);
-
-//   return (
-//     <div className="profile-page">
-//       <div className="profile-page__container">
-//         <div className="profile-page__container__title">
-//           Profile Page
-//         </div>
-//         <div className="profile-page__container__content">
-//           <div className="profile-page__container__content__name">
-//             {name}
-//           </div>
-//           <div className="profile-page__container__content__email">
-//             {email}
-//           </div>
-//           <div className="profile-page__container__content__password">
-//             {password}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default ProfilePage;
-
-// return (
-//   <div className="profile-page">
-//     <div className="profile-page__container">
-//       <div className="profile-page__container__title">
-//         {username}'s Profile
-//       </div>
-//       <div className="profile-page__container__content">
-//         <div className="profile-page__container__content__left">
-//           <div className="profile-page__container__content__left__image">
-//             <img src="/images/profile.png" alt="profile" />
-//           </div>
-//           <div className="profile-page__container__content__left__name">
-//             {username}
-//           </div>
-//           <div className="profile-page__container__content__left__email">
-//             {user.email}
-//           </div>
-//         </div>
-//         <div className="profile-page__container__content__right">
-//           <div className="profile-page__container__content__right__title">
-//             Orders
-//           </div>
-//           <div className="profile-page__container__content__right__orders">
-//             {cart.map((item) => (
-//               <div className="profile-page__container__content__right__orders__order">
-//                 <div className="profile-page__container__content__right__orders__order__image">
-//                   <img
-//                     src={item.image
-//                       //  ? item.image : "/images/no-image.png"} alt="product" />
-//                       .replace('http://localhost:5000', '')
-//                       .replace('https://simazon.herokuapp.com', '')}
-//                     alt="product"
-//                   />
-//                 </div>
-//                 <div className="profile-page__container__content__right__orders__order__name">
-//                   {item.name}
-//                 </div>
-//                 <div className="profile-page__container__content__right__orders__order__price">
-//                   ${item.price}
-//                 </div>
-//                 <div className="profile-page__container__content__right__orders__order__qty">
-//                   Qty: {item.num}
-//                 </div>
-//               </div>
-//             ))}
-//           </div>
-//         </div>
-//       </div>
-//     </div>
-//   </div>
-// );
-// };
-
-// export default ProfilePage;
-

@@ -9,7 +9,9 @@ export default function ProfilePart() {
 
   return (
     <div>
+      <h1>Welcome back</h1>
       <Outlet />
     </div>
   );
 }
+
