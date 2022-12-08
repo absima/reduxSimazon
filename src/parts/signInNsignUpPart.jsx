@@ -18,7 +18,6 @@ import {
 export default function SignInOrSignUpPart({ flag }) {
   const dispatch = useDispatch();
   const user = useSelector(selectUser);
-  console.log('-------user------', user);
   const error = useSelector(selectError);
   const navigate = useNavigate();
   //
@@ -46,12 +45,11 @@ export default function SignInOrSignUpPart({ flag }) {
   const [formValid, setFormValid] = useState(false);
   const [successful, setSuccessful] = useState(false);
 
-  console.log('user', user);
-  console.log('flag', flag);
-  console.log('successful', successful);
 
   const em = 'sima@meng.com';
   const pw = 'Password1';
+
+  
 
   const validateEmail = (email) => {
     const re =

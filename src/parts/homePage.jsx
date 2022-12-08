@@ -10,7 +10,7 @@ export default function HomePage(props) {
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPosition: 'center',
-        height: '50vh',
+        // height: '50vh',
       }}
     >
       <Row className="align-items-start">
@@ -21,14 +21,17 @@ export default function HomePage(props) {
           </Link>
           <h1
             style={{
-              fontSize: '2.5rem',
+              fontSize: '2.2rem',
               fontWeight: 'bold',
-              paddingLeft: '2rem',
-              marginTop: '15rem',
+              paddingLeft: '1rem',
+              marginTop: '10rem',
+              // backgroundColor: 'white',
+              width: '50%',
             }}
           >
             <div
               style={{
+                fontSize: '4rem',
                 color: 'green',
               }}
             >
@@ -47,98 +50,100 @@ export default function HomePage(props) {
         </Col>
 
         <Col xs={12} md={6} lg={6}>
-          <Row>
-            <Carousel>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100 carouselimage"
-                  src="./images/chrisgift.jpeg"
-                  alt="christmas"
-                />
+          <div className="carousel">
+            <Row>
+              <Carousel>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 carouselimage"
+                    src="./images/chrisgift.jpeg"
+                    alt="christmas"
+                  />
 
-                <Carousel.Caption className="carouselcaption">
-                  <h3 className="caroheading">Christmas Gifts</h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                </Carousel.Caption>
-              </Carousel.Item>
+                  <Carousel.Caption className="carouselcaption">
+                    <h3 className="caroheading">Christmas Gifts</h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                  </Carousel.Caption>
+                </Carousel.Item>
 
-              <Carousel.Item>
-                <img
-                  className="d-block w-100 carouselimage"
-                  src="./images/forher.webp"
-                  alt="for women"
-                />
-                <Carousel.Caption className="carouselcaption">
-                  <h3>Gifts for her</h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                </Carousel.Caption>
-              </Carousel.Item>
-              <Carousel.Item>
-                <img
-                  className="d-block w-100 carouselimage"
-                  src="./images/forhim.jpeg"
-                  alt="for men"
-                />
-                <Carousel.Caption className="carouselcaption">
-                  <h3>Gifts for him</h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                </Carousel.Caption>
-              </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 carouselimage"
+                    src="./images/forher.webp"
+                    alt="for women"
+                  />
+                  <Carousel.Caption className="carouselcaption">
+                    <h3>Gifts for her</h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                  </Carousel.Caption>
+                </Carousel.Item>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 carouselimage"
+                    src="./images/forhim.jpeg"
+                    alt="for men"
+                  />
+                  <Carousel.Caption className="carouselcaption">
+                    <h3>Gifts for him</h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                  </Carousel.Caption>
+                </Carousel.Item>
 
-              <Carousel.Item>
-                <img
-                  className="d-block w-100  carouselimage"
-                  src="./images/forkids.jpeg"
-                  alt="for kids"
-                />
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100  carouselimage"
+                    src="./images/forkids.jpeg"
+                    alt="for kids"
+                  />
 
-                <Carousel.Caption className="carouselcaption">
-                  <h3>Gifts for kids</h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                </Carousel.Caption>
-              </Carousel.Item>
+                  <Carousel.Caption className="carouselcaption">
+                    <h3>Gifts for kids</h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                  </Carousel.Caption>
+                </Carousel.Item>
 
-              <Carousel.Item>
-                <img
-                  className="d-block w-100 carouselimage"
-                  src="./images/featured.jpeg"
-                  alt="featured"
-                />
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 carouselimage"
+                    src="./images/featured.jpeg"
+                    alt="featured"
+                  />
 
-                <Carousel.Caption className="carouselcaption">
-                  <h3> Featured products </h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                </Carousel.Caption>
-              </Carousel.Item>
+                  <Carousel.Caption className="carouselcaption">
+                    <h3> Featured products </h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                  </Carousel.Caption>
+                </Carousel.Item>
 
-              <Carousel.Item>
-                <img
-                  className="d-block w-100 carouselimage"
-                  src="./images/onsale.jpeg"
-                  alt="on sale"
-                />
-                <Carousel.Caption className="carouselcaption">
-                  <h3> On Sale</h3>
-                  <Link to="/products" className="btn btn-primary">
-                    click here
-                  </Link>
-                  {/* <p>
+                <Carousel.Item>
+                  <img
+                    className="d-block w-100 carouselimage"
+                    src="./images/onsale.jpeg"
+                    alt="on sale"
+                  />
+                  <Carousel.Caption className="carouselcaption">
+                    <h3> On Sale</h3>
+                    <Link to="/products" className="btn btn-primary">
+                      click here
+                    </Link>
+                    {/* <p>
                     Nulla vitae elit libero, a pharetra augue mollis interdum.
                   </p> */}
-                </Carousel.Caption>
-              </Carousel.Item>
-            </Carousel>
-          </Row>
+                  </Carousel.Caption>
+                </Carousel.Item>
+              </Carousel>
+            </Row>
+          </div>
         </Col>
       </Row>
     </Container>
