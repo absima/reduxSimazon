@@ -172,6 +172,7 @@ export default function SignInOrSignUpPart({ flag }) {
     // make the API call
     axios(configuration)
       .then((result) => {
+        console.log('result', result);
         setRegister(true);
         console.log('register set to true in config', register);
       })
